@@ -1,0 +1,15 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+
+$title = 'ADD NEW ALBUM';
+$this->headTitle($title);
+?>
+
+<h1>
+  <?= $this->escapeHtml($title) ?>
+</h1>
+<p>
+  <a href="<?= $this->url('album') ?>">Go back</a>
+</p>
