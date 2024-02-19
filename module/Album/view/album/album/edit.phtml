@@ -2,8 +2,7 @@
 /**
  * @var Laminas\View\Renderer\PhpRenderer $this
  */
-
-$title = 'EDIT ALBUM';
+$title = "Edit '{$album->getTitle()}' by '{$album->getArtist()}'";
 $this->headTitle($title);
 ?>
 
@@ -12,4 +11,12 @@ $this->headTitle($title);
 </h1>
 <p>
   <a href="<?= $this->url('album') ?>">Go back</a>
+</p>
+
+<p>
+  <?= $album->getArtist() ?>
+</p>
+
+<p>
+  <?= $album->getTitle() ?>
 </p>

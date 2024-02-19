@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace Album;
 
-use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
-use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'controllers' => [
         'factories' => [
-            Controller\MeddlController::class => InvokableFactory::class,
+            Controller\AlbumController::class => Controller\Factory\AlbumControllerFactory::class,
         ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            Service\AlbumManager::class => Service\Factory\AlbumManagerFactory::class,
+        ]
     ],
     'router' => [
         'routes' => [
-            // knecht -> name is free to choose
-            'knecht' => [
+            'album' => [
                 'type' => Segment::class,
                 'options' => [
                     // route is free to choose
@@ -27,12 +29,8 @@ return [
                         'id' => '[0-9]+',
                     ],
                     'defaults' => [
-                        'controller' => Controller\MeddlController::class,
-                        /**
-                         * In MeddlController exists a method that is called 'testAction'
-                         * that gets triggered when hitting this route.
-                         */
-                        'action' => 'test',
+                        'controller' => Controller\AlbumController::class,
+                        'action' => 'index',
                     ],
                 ],
             ],
@@ -41,6 +39,27 @@ return [
     'view_manager' => [
         'template_path_stack' => [
             'album' => __DIR__ . '/../view',
+        ],
+    ],
+    'doctrine' => [
+        'driver' => [
+            // defines an annotation driver with two paths, and names it `my_annotation_driver`
+            __NAMESPACE__ . '_driver' => [
+                'class' => \Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
+                'cache' => 'array',
+                'paths' => [
+                    __DIR__ . '/../src/Entity'
+                ],
+            ],
+
+            // default metadata driver, aggregates all other drivers into a single one.
+            // Override `orm_default` only if you know what you're doing
+            'orm_default' => [
+                'drivers' => [
+                    // register `my_annotation_driver` for any entity under namespace `My\Namespace`
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                ],
+            ],
         ],
     ],
 ];
