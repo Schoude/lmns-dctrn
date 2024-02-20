@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Album\Controller;
 
 use Album\Entity\Album;
+use Album\Form\AlbumForm;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -37,7 +38,28 @@ class AlbumController extends AbstractActionController
 
     public function addAction()
     {
-        return new ViewModel();
+        $form = new AlbumForm();
+        $form->get('submit')->setValue('Add');
+
+        $request = $this->getRequest();
+
+        if (!$request->isPost()) {
+            return ['form' => $form];
+        }
+
+        $album = new Album();
+        $form->setInputFilter($album->getInputFilter());
+        $form->setData($request->getPost());
+
+        if (!$form->isValid()) {
+            return ['form' => $form];
+        }
+
+        // var_dump($form->getData());
+        // die();
+
+        $this->albumManager->addNewAlbum($form->getData());
+        return $this->redirect()->toRoute('album');
     }
 
     public function editAction()
