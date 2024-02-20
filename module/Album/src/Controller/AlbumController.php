@@ -55,9 +55,6 @@ class AlbumController extends AbstractActionController
             return ['form' => $form];
         }
 
-        // var_dump($form->getData());
-        // die();
-
         $this->albumManager->addNewAlbum($form->getData());
         return $this->redirect()->toRoute('album');
     }
@@ -70,11 +67,41 @@ class AlbumController extends AbstractActionController
             return $this->redirect()->toRoute('album', ['action' => 'index']);
         }
 
-        $album = $this->entityManager->getRepository(Album::class)->findOneBy(['id' => $id]);
+        try {
+            /** @var Album $album */
+            $album = $this->entityManager->getRepository(Album::class)->findOneBy(['id' => $id]);
+        } catch (\Exception $e) {
+            return $this->redirect()->toRoute('album', ['action' => 'index']);
+        }
 
-        return new ViewModel([
-            'album' => $album,
-        ]);
+        $form = new AlbumForm();
+        $form->bind($album);
+        $form->get('submit')->setAttribute('value', 'Edit');
+
+        $request = $this->getRequest();
+        $viewData = ['id' => $id, 'form' => $form];
+
+        if (!$request->isPost()) {
+            return $viewData;
+        }
+
+        $form->setInputFilter($album->getInputFilter());
+        $form->setData($request->getPost());
+
+        if (!$form->isValid()) {
+            return $viewData;
+        }
+
+        try {
+            $this->albumManager->updateAlbum($album, [
+                'title' => $request->getPost('title'),
+                'artist' => $request->getPost('artist'),
+            ]);
+        } catch (\Exception $e) {
+        }
+
+        // Redirect to album list
+        return $this->redirect()->toRoute('album', ['action' => 'index']);
     }
 
     public function deleteAction()

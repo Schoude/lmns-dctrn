@@ -26,7 +26,7 @@ class AlbumManager
     $this->entityManager->flush();
   }
 
-  public function updateAlbum($album, $data)
+  public function updateAlbum(Album $album, $data)
   {
     $album->setTitle($data["title"]);
     $album->setArtist($data["artist"]);
