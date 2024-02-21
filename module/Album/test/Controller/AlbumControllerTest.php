@@ -122,4 +122,25 @@ class AlbumControllerTest extends AbstractHttpControllerTestCase
     $this->assertResponseStatusCode(302);
     $this->assertRedirectTo('/album');
   }
+
+  public function testEditActionRedirectsAfterValidPost()
+  {
+    $this->albumManager
+      ->findById(Argument::type('int'))
+      ->willReturn(new Album());
+
+    $this->albumManager
+      ->updateAlbum(Argument::type(Album::class), Argument::type('array'))
+      ->shouldBeCalled();
+
+    $editData = [
+      'title' => 'Led Zeppelin III',
+      'artist' => 'Led Zeppelin',
+      'id' => '1',
+    ];
+
+    $this->dispatch('/album/edit/1', 'POST', $editData);
+    $this->assertResponseStatusCode(302);
+    $this->assertRedirectTo('/album');
+  }
 }

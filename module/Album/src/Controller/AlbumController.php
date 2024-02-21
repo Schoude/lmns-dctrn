@@ -69,7 +69,7 @@ class AlbumController extends AbstractActionController
 
         try {
             /** @var Album $album */
-            $album = $this->entityManager->getRepository(Album::class)->findOneBy(['id' => $id]);
+            $album = $this->albumManager->findById($id);
         } catch (\Exception $e) {
             return $this->redirect()->toRoute('album', ['action' => 'index']);
         }
@@ -111,6 +111,7 @@ class AlbumController extends AbstractActionController
             return $this->redirect()->toRoute('album');
         }
 
+        /** @var Album $album */
         $album = $this->albumManager->findById($id);
 
         $request = $this->getRequest();
