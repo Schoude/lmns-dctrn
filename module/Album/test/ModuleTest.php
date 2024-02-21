@@ -17,7 +17,10 @@ class ModuleTest extends TestCase
         $module = new Module();
         $config = $module->getConfig();
 
-        self::assertArrayHasKey('router', $config);
         self::assertArrayHasKey('controllers', $config);
+        self::assertArrayHasKey('service_manager', $config);
+        self::assertArrayHasKey('router', $config);
+        self::assertArrayHasKey('view_manager', $config);
+        self::assertArrayHasKey('doctrine', $config);
     }
 }
