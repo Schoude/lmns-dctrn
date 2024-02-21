@@ -19,10 +19,10 @@
     </source>
 
     <testsuites>
-        <testsuite name="Laminas MVC Skeleton Application Module Test Suite">
+        <testsuite name="Application">
             <directory>./module/Application/test</directory>
         </testsuite>
-        <testsuite name="Album Module Test Suite">
+        <testsuite name="Album">
             <directory>./module/Album/test</directory>
         </testsuite>
     </testsuites>
