@@ -16,6 +16,13 @@ class AlbumManager
     $this->entityManager = $entityManager;
   }
 
+  public function findAll()
+  {
+    return $this->entityManager
+      ->getRepository(Album::class)
+      ->findAll() ?? [];
+  }
+
   public function addNewAlbum($data)
   {
     $album = new Album();
