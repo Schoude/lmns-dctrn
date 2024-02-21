@@ -23,7 +23,7 @@ class AlbumManager
       ->findAll() ?? [];
   }
 
-  public function addNewAlbum($data)
+  public function addNewAlbum(array $data)
   {
     $album = new Album();
     $album->setTitle($data["title"]);
