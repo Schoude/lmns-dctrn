@@ -23,6 +23,11 @@ class AlbumManager
       ->findAll() ?? [];
   }
 
+  public function findById($id)
+  {
+    return $this->entityManager->getRepository(Album::class)->findOneBy(['id' => $id]);
+  }
+
   public function addNewAlbum(array $data)
   {
     $album = new Album();

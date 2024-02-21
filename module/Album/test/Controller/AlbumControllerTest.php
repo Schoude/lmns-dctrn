@@ -1,6 +1,7 @@
 <?php
 namespace AlbumTest\Controller;
 
+use Album\Entity\Album;
 use Album\Service\AlbumManager;
 use Album\Controller\AlbumController;
 use Laminas\Stdlib\ArrayUtils;
@@ -80,6 +81,44 @@ class AlbumControllerTest extends AbstractHttpControllerTestCase
     ];
 
     $this->dispatch('/album/add', 'POST', $postData);
+    $this->assertResponseStatusCode(302);
+    $this->assertRedirectTo('/album');
+  }
+
+  public function testDeleteActionRedirectsAfterPositiveConfirmation()
+  {
+    $this->albumManager
+      ->findById(Argument::type('int'))
+      ->willReturn(new Album());
+
+    $this->albumManager
+      ->deleteAlbum(Argument::type(Album::class))
+      ->shouldBeCalled();
+
+    $postData = [
+      'del' => 'Yes',
+    ];
+
+    $this->dispatch('/album/delete/1', 'POST', $postData);
+    $this->assertResponseStatusCode(302);
+    $this->assertRedirectTo('/album');
+  }
+
+  public function testDeleteActionRedirectsAfterNegativeConfirmation()
+  {
+    $this->albumManager
+      ->findById(Argument::type('int'))
+      ->willReturn(new Album());
+
+    $this->albumManager
+      ->deleteAlbum(Argument::type(Album::class))
+      ->shouldNotBeCalled();
+
+    $postData = [
+      'del' => 'No',
+    ];
+
+    $this->dispatch('/album/delete/1', 'POST', $postData);
     $this->assertResponseStatusCode(302);
     $this->assertRedirectTo('/album');
   }

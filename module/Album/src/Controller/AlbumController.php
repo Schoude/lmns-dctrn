@@ -111,7 +111,7 @@ class AlbumController extends AbstractActionController
             return $this->redirect()->toRoute('album');
         }
 
-        $album = $this->entityManager->getRepository(Album::class)->findOneBy(['id' => $id]);
+        $album = $this->albumManager->findById($id);
 
         $request = $this->getRequest();
 
