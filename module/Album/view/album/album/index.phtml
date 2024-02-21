@@ -19,7 +19,7 @@ $this->headTitle($title);
         <th>Artist</th>
         <th>&nbsp;</th>
     </tr>
-    <?php foreach ($albums as $album): ?>
+    <?php foreach ($this->paginator as $album): // <-- change here!    ?>
         <tr>
             <td>
                 <?= $this->escapeHtml($album->getTitle()) ?>
@@ -28,9 +28,23 @@ $this->headTitle($title);
                 <?= $this->escapeHtml($album->getArtist()) ?>
             </td>
             <td>
-                <a href="<?= $this->url('album', ['action' => 'edit', 'id' => $album->getId()]) ?>">Edit</a>
-                <a href="<?= $this->url('album', ['action' => 'delete', 'id' => $album->getId()]) ?>">Delete</a>
+                <a href="<?= $this->url('album', ['action' => 'edit', 'id' => $album->getId()]) ?>">
+                    Edit
+                </a>
+                <a href="<?= $this->url('album', ['action' => 'delete', 'id' => $album->getId()]) ?>">
+                    Delete
+                </a>
             </td>
         </tr>
     <?php endforeach; ?>
 </table>
+<?= $this->paginationControl(
+    // The paginator object:
+    $this->paginator,
+    // The scrolling style:
+    'sliding',
+    // The partial to use to render the control:
+    'partial/paginator',
+    // The route to link to when a user clicks a control link:
+    ['route' => 'album']
+) ?>

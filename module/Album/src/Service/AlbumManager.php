@@ -3,6 +3,8 @@
 namespace Album\Service;
 
 use Album\Entity\Album;
+use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
+use Laminas\Paginator\Paginator;
 
 class AlbumManager
 {
@@ -16,11 +18,40 @@ class AlbumManager
     $this->entityManager = $entityManager;
   }
 
-  public function findAll()
+  public function findAll(bool $paginated = false)
   {
+    if ($paginated) {
+      return $this->fetchPaginatedResults();
+    }
+
     return $this->entityManager
       ->getRepository(Album::class)
       ->findAll() ?? [];
+  }
+
+  private function fetchPaginatedResults()
+  {
+    // There are two ways to create paginated results with doctrine
+
+    // 1) With a collection adapter -> this need a DoctrineCollection with already fetched resulsts
+    // Create a Doctrine 2 Collection
+    // $doctrineCollection = new ArrayCollection($results);
+
+    // Create the adapter
+    // $adapter = new CollectionAdapter($doctrineCollection);
+
+    // 2) With the selectable adapter
+    // This works with the Entity repository
+    $objectRepository = $this->entityManager
+      ->getRepository(Album::class);
+    $adapter = new SelectableAdapter($objectRepository);
+
+    // Create the paginator itself
+    $paginator = new Paginator($adapter);
+    $paginator->setCurrentPageNumber(1)
+      ->setItemCountPerPage(5);
+
+    return $paginator;
   }
 
   public function findById($id)
