@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Controller;
 
-use Application\Controller\IndexController;
+use Application\Controller\VueAPpController;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
@@ -21,7 +21,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->setApplicationConfig(ArrayUtils::merge(
             include __DIR__ . '/../../../../config/application.config.php',
             $configOverrides
-        ));
+        )
+        );
 
         parent::setUp();
     }
@@ -31,7 +32,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->dispatch('/', 'GET');
         $this->assertResponseStatusCode(200);
         $this->assertModuleName('application');
-        $this->assertControllerName(IndexController::class); // as specified in router's controller name alias
+        $this->assertControllerName(VueAPpController::class); // as specified in router's controller name alias
         $this->assertControllerClass('IndexController');
         $this->assertMatchedRouteName('home');
     }

@@ -21,6 +21,16 @@ return [
                     ],
                 ],
             ],
+            'vue-app' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/vue-app',
+                    'defaults' => [
+                        'controller' => Controller\VueAppController::class,
+                        'action' => 'index',
+                    ],
+                ],
+            ],
             'application' => [
                 'type' => Segment::class,
                 'options' => [
@@ -36,6 +46,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\VueAppController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
@@ -47,6 +58,7 @@ return [
         'template_map' => [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'application/vue-app/index' => __DIR__ . '/../view/application/vue-app/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ],
@@ -59,6 +71,10 @@ return [
             [
                 'label' => 'Home',
                 'route' => 'home',
+            ],
+            [
+                'label' => 'The Vue App',
+                'route' => 'vue-app',
             ],
             [
                 'label' => 'Album',
