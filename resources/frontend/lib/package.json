@@ -18,6 +18,7 @@
       "require": "./dist/my-library.css"
     }
   },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

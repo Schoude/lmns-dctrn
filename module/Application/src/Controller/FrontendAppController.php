@@ -7,7 +7,7 @@ namespace Application\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
-class VueAppController extends AbstractActionController
+class FrontendAppController extends AbstractActionController
 {
     public function indexAction()
     {

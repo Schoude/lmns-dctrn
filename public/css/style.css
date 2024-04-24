@@ -15,3 +15,15 @@
 .navbar li.active a {
     color: var(--bs-navbar-active-color);
 }
+
+my-element {
+    background-color: #013755;
+
+    /* Expose variables from the shadow root */
+    --color-button: yellow;
+
+    /* Slot content is a direct child NOT in the shadow root */
+    h1 {
+        color: orange;
+    }
+}

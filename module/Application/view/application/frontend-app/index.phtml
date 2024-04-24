@@ -1,0 +1,19 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+
+<div class="p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-4">Welcome to the suppossed Vue App</h1>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+</div>
+<my-element docs-hint="THIS IS FROM phtml!">
+    <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea voluptas exercitationem excepturi laborum nihil
+        dolores repellat omnis quidem perferendis autem.</h1>
+</my-element>
+
+<?= $this->inlineScript()
+    ->appendFile($this->basePath('js/src/test.js'), 'text/javascript') ?>

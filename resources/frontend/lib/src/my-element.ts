@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 
 /**
  * An example element.
@@ -12,13 +12,13 @@ export class MyElement extends LitElement {
   /**
    * Copy for the read the docs hint.
    */
-  @property()
+  @property({ attribute: 'docs-hint' })
   docsHint = 'Click on the Vite and Lit logos to learn more'
 
   /**
    * The number of times the button has been clicked.
    */
-  @property({ type: Number })
+  @state()
   count = 0
 
   render() {
@@ -28,7 +28,7 @@ export class MyElement extends LitElement {
       </div>
       <slot></slot>
       <div class="card">
-        <button @click=${this._onClick} part="button">
+        <button @click=${this.#onClick} part="button">
           count is ${this.count}
         </button>
       </div>
@@ -36,7 +36,7 @@ export class MyElement extends LitElement {
     `
   }
 
-  private _onClick() {
+  #onClick() {
     this.count++
   }
 
@@ -46,6 +46,8 @@ export class MyElement extends LitElement {
       margin: 0 auto;
       padding: 2rem;
       text-align: center;
+      background-color: green;
+      --color-button: green;
     }
 
     .logo {
@@ -72,6 +74,7 @@ export class MyElement extends LitElement {
     ::slotted(h1) {
       font-size: 3.2em;
       line-height: 1.1;
+      color: red;
     }
 
     a {
@@ -91,24 +94,16 @@ export class MyElement extends LitElement {
       font-weight: 500;
       font-family: inherit;
       background-color: #1a1a1a;
+      color: var(--color-button);
       cursor: pointer;
       transition: border-color 0.25s;
     }
     button:hover {
-      border-color: #646cff;
+      color: #646cff;
     }
     button:focus,
     button:focus-visible {
       outline: 4px auto -webkit-focus-ring-color;
-    }
-
-    @media (prefers-color-scheme: light) {
-      a:hover {
-        color: #747bff;
-      }
-      button {
-        background-color: #f9f9f9;
-      }
     }
   `
 }

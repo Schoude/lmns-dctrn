@@ -21,12 +21,12 @@ return [
                     ],
                 ],
             ],
-            'vue-app' => [
+            'frontend-app' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/vue-app',
+                    'route' => '/frontend-app',
                     'defaults' => [
-                        'controller' => Controller\VueAppController::class,
+                        'controller' => Controller\FrontendAppController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -46,7 +46,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
-            Controller\VueAppController::class => InvokableFactory::class,
+            Controller\FrontendAppController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
@@ -58,7 +58,7 @@ return [
         'template_map' => [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'application/vue-app/index' => __DIR__ . '/../view/application/vue-app/index.phtml',
+            'application/frontend-app/index' => __DIR__ . '/../view/application/frontend-app/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ],
@@ -73,8 +73,8 @@ return [
                 'route' => 'home',
             ],
             [
-                'label' => 'The Vue App',
-                'route' => 'vue-app',
+                'label' => 'The Frontend App',
+                'route' => 'frontend-app',
             ],
             [
                 'label' => 'Album',
